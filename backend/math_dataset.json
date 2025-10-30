@@ -1,0 +1,234 @@
+[
+  {
+    "question": "Solve x^2 + 5x + 6 = 0",
+    "answer": "The equation x^2 + 5x + 6 = 0 has two solutions: x = -2 and x = -3",
+    "steps": [
+      "Given: x^2 + 5x + 6 = 0",
+      "Factor the quadratic: (x + 2)(x + 3) = 0",
+      "Apply zero product property: x + 2 = 0 or x + 3 = 0",
+      "Solution 1: x = -2",
+      "Solution 2: x = -3"
+    ],
+    "solution": "x = -2 or x = -3",
+    "confidence": 0.95,
+    "topic": "Algebra",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Differentiate f(x) = x^2 + 3x + 1",
+    "answer": "The derivative of f(x) = x^2 + 3x + 1 is f'(x) = 2x + 3",
+    "steps": [
+      "Given: f(x) = x^2 + 3x + 1",
+      "Apply power rule: d/dx(x^n) = n*x^(n-1)",
+      "Derivative of x^2: 2x",
+      "Derivative of 3x: 3",
+      "Derivative of 1: 0",
+      "Combine: f'(x) = 2x + 3"
+    ],
+    "solution": "f'(x) = 2x + 3",
+    "confidence": 0.95,
+    "topic": "Calculus",
+    "difficulty": "Easy"
+  },
+  {
+    "question": "Solve 2x + 5 = 13",
+    "answer": "The solution to 2x + 5 = 13 is x = 4",
+    "steps": [
+      "Given: 2x + 5 = 13",
+      "Subtract 5 from both sides: 2x = 8",
+      "Divide both sides by 2: x = 4"
+    ],
+    "solution": "x = 4",
+    "confidence": 0.95,
+    "topic": "Algebra",
+    "difficulty": "Easy"
+  },
+  {
+    "question": "Integrate ∫(x^2 + 2x) dx",
+    "answer": "The integral of x^2 + 2x is (1/3)x^3 + x^2 + C",
+    "steps": [
+      "Given: ∫(x^2 + 2x) dx",
+      "Apply power rule for integration: ∫x^n dx = (1/(n+1))x^(n+1)",
+      "∫x^2 dx = (1/3)x^3",
+      "∫2x dx = x^2",
+      "Combine and add constant: (1/3)x^3 + x^2 + C"
+    ],
+    "solution": "(1/3)x^3 + x^2 + C",
+    "confidence": 0.95,
+    "topic": "Calculus",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Find the limit: lim(x→0) (sin x)/x",
+    "answer": "The limit lim(x→0) sin(x)/x = 1",
+    "steps": [
+      "Given: lim(x→0) sin(x)/x",
+      "This is a standard limit",
+      "Using L'Hopital's rule or Taylor series",
+      "sin(x) = x - x^3/3! + ...",
+      "sin(x)/x = 1 - x^2/3! + ...",
+      "As x→0, sin(x)/x → 1"
+    ],
+    "solution": "1",
+    "confidence": 0.95,
+    "topic": "Calculus",
+    "difficulty": "Hard"
+  },
+  {
+    "question": "Factor x^2 - 9",
+    "answer": "x^2 - 9 factors as (x + 3)(x - 3)",
+    "steps": [
+      "Given: x^2 - 9",
+      "Recognize as difference of squares: a^2 - b^2 = (a + b)(a - b)",
+      "x^2 - 9 = x^2 - 3^2",
+      "Apply formula: (x + 3)(x - 3)"
+    ],
+    "solution": "(x + 3)(x - 3)",
+    "confidence": 0.95,
+    "topic": "Algebra",
+    "difficulty": "Easy"
+  },
+  {
+    "question": "Simplify: (x^2 - 4)/(x - 2)",
+    "answer": "The simplified form is x + 2",
+    "steps": [
+      "Given: (x^2 - 4)/(x - 2)",
+      "Factor numerator: x^2 - 4 = (x - 2)(x + 2)",
+      "Cancel common factor: (x - 2)(x + 2)/(x - 2)",
+      "Result: x + 2"
+    ],
+    "solution": "x + 2",
+    "confidence": 0.95,
+    "topic": "Algebra",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Differentiate f(x) = e^x",
+    "answer": "The derivative of f(x) = e^x is f'(x) = e^x",
+    "steps": [
+      "Given: f(x) = e^x",
+      "Apply exponential rule: d/dx(e^x) = e^x",
+      "Result: f'(x) = e^x"
+    ],
+    "solution": "e^x",
+    "confidence": 0.95,
+    "topic": "Calculus",
+    "difficulty": "Easy"
+  },
+  {
+    "question": "Solve 3x - 7 = 11",
+    "answer": "The solution is x = 6",
+    "steps": [
+      "Given: 3x - 7 = 11",
+      "Add 7 to both sides: 3x = 18",
+      "Divide both sides by 3: x = 6"
+    ],
+    "solution": "x = 6",
+    "confidence": 0.95,
+    "topic": "Algebra",
+    "difficulty": "Easy"
+  },
+  {
+    "question": "Integrate ∫e^x dx",
+    "answer": "The integral of e^x is e^x + C",
+    "steps": [
+      "Given: ∫e^x dx",
+      "Apply exponential integration rule: ∫e^x dx = e^x",
+      "Add constant of integration: e^x + C"
+    ],
+    "solution": "e^x + C",
+    "confidence": 0.95,
+    "topic": "Calculus",
+    "difficulty": "Easy"
+  },
+  {
+    "question": "Find the derivative of sin(x)",
+    "answer": "The derivative of sin(x) is cos(x)",
+    "steps": [
+      "Given: f(x) = sin(x)",
+      "Apply trigonometric derivative rule: d/dx(sin x) = cos x",
+      "Result: f'(x) = cos(x)"
+    ],
+    "solution": "cos(x)",
+    "confidence": 0.95,
+    "topic": "Calculus",
+    "difficulty": "Easy"
+  },
+  {
+    "question": "Solve 5x^2 - 20x = 0",
+    "answer": "The solutions are x = 0 and x = 4",
+    "steps": [
+      "Given: 5x^2 - 20x = 0",
+      "Factor out common factor: 5x(x - 4) = 0",
+      "Apply zero product property: 5x = 0 or x - 4 = 0",
+      "Solution 1: x = 0",
+      "Solution 2: x = 4"
+    ],
+    "solution": "x = 0 or x = 4",
+    "confidence": 0.95,
+    "topic": "Algebra",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Evaluate ∫(3x^2 + 2) dx from 0 to 2",
+    "answer": "The definite integral is 12",
+    "steps": [
+      "Given: ∫(3x^2 + 2) dx from 0 to 2",
+      "Find antiderivative: x^3 + 2x",
+      "Evaluate: [x^3 + 2x] from 0 to 2",
+      "At x=2: 2^3 + 2(2) = 8 + 4 = 12",
+      "At x=0: 0^3 + 2(0) = 0",
+      "Result: 12 - 0 = 12"
+    ],
+    "solution": "12",
+    "confidence": 0.95,
+    "topic": "Calculus",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Find the limit: lim(x→2) (x^2 - 4)/(x - 2)",
+    "answer": "The limit is 4",
+    "steps": [
+      "Given: lim(x→2) (x^2 - 4)/(x - 2)",
+      "Factor numerator: (x - 2)(x + 2)",
+      "Simplify: (x - 2)(x + 2)/(x - 2) = x + 2",
+      "Evaluate at x=2: 2 + 2 = 4"
+    ],
+    "solution": "4",
+    "confidence": 0.95,
+    "topic": "Calculus",
+    "difficulty": "Medium"
+  },
+  {
+    "question": "Simplify: 2x^2 - 3x^2 + 5x^2",
+    "answer": "The simplified form is 4x^2",
+    "steps": [
+      "Given: 2x^2 - 3x^2 + 5x^2",
+      "Combine like terms",
+      "2 - 3 + 5 = 4",
+      "Result: 4x^2"
+    ],
+    "solution": "4x^2",
+    "confidence": 0.95,
+    "topic": "Algebra",
+    "difficulty": "Easy"
+  },
+  {
+    "question": "Differentiate f(x) = x^3 + 2x^2 + x + 1",
+    "answer": "The derivative is f'(x) = 3x^2 + 4x + 1",
+    "steps": [
+      "Given: f(x) = x^3 + 2x^2 + x + 1",
+      "Apply power rule to each term",
+      "d/dx(x^3) = 3x^2",
+      "d/dx(2x^2) = 4x",
+      "d/dx(x) = 1",
+      "d/dx(1) = 0",
+      "Combine: f'(x) = 3x^2 + 4x + 1"
+    ],
+    "solution": "3x^2 + 4x + 1",
+    "confidence": 0.95,
+    "topic": "Calculus",
+    "difficulty": "Easy"
+  }
+]
+
