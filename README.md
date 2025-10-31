@@ -89,31 +89,6 @@ npm run dev
 # Backend → http://localhost:8000
 # Frontend → http://localhost:5173
 
-📁 PROJECT STRUCTURE
-
-math-routing-agent/
-├── backend/
-│   ├── agent/
-│   │   ├── routing.py          → Intelligent routing logic
-│   │   ├── knowledge_base.py   → Qdrant KB search
-│   │   ├── web_search.py       → Tavily + MCP fallback
-│   │   ├── guardrails.py       → Input/output safety
-│   │   ├── math_solver.py      → SymPy symbolic math
-│   │   ├── feedback.py         → Feedback collection
-│   │   └── verifier.py         → Output verification
-│   ├── main.py                 → FastAPI entrypoint
-│   ├── populate_kb.py          → Knowledge base builder
-│   ├── math_dataset.json       → Sample dataset
-│   ├── requirements.txt
-│   └── .env.example
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── MainContent.jsx → Chat interface
-│   │   │   └── Sidebar.jsx     → Chat history
-│   │   └── App.jsx             → Root component
-│   └── package.json
-└── README.md
 
 🔌 API ENDPOINTS
 ──────────────────────────────────────────────────────────────
