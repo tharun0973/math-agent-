@@ -1,0 +1,74 @@
+[
+  {
+    "question": "What is the Laplace transform of sin(3t)?",
+    "answer": "The Laplace transform of sin(3t) is 3 / (s^2 + 9).",
+    "solution": "\\mathcal{L}\\{\\sin(3t)\\} = \\frac{3}{s^2 + 9}",
+    "steps": [
+      "Use the identity: \\mathcal{L}\\{\\sin(bt)\\} = \\frac{b}{s^2 + b^2}",
+      "Here, b = 3 \u2192 \\frac{3}{s^2 + 9}"
+    ],
+    "confidence": 0.99,
+    "source": "Verified Laplace identity",
+    "markdown": "## \u2705 Final Answer\n\n$$\\mathcal{L}\\{\\sin(3t)\\} = \\frac{3}{s^2 + 9}$$\n\n## \ud83e\udde0 Step-by-Step Breakdown\n### Step 1\nUse the identity: \\mathcal{L}\\{\\sin(bt)\\} = \\frac{b}{s^2 + b^2}\n### Step 2\nHere, b = 3 \u2192 \\frac{3}{s^2 + 9}"
+  },
+  {
+    "question": "What is the Laplace transform of cos(4t)?",
+    "answer": "The Laplace transform of cos(4t) is s / (s^2 + 16).",
+    "solution": "\\mathcal{L}\\{\\cos(4t)\\} = \\frac{s}{s^2 + 16}",
+    "steps": [
+      "Use the identity: \\mathcal{L}\\{\\cos(bt)\\} = \\frac{s}{s^2 + b^2}",
+      "Here, b = 4 \u2192 \\frac{s}{s^2 + 16}"
+    ],
+    "confidence": 0.99,
+    "source": "Verified Laplace identity",
+    "markdown": "## \u2705 Final Answer\n\n$$\\mathcal{L}\\{\\cos(4t)\\} = \\frac{s}{s^2 + 16}$$\n\n## \ud83e\udde0 Step-by-Step Breakdown\n### Step 1\nUse the identity: \\mathcal{L}\\{\\cos(bt)\\} = \\frac{s}{s^2 + b^2}\n### Step 2\nHere, b = 4 \u2192 \\frac{s}{s^2 + 16}"
+  },
+  {
+    "question": "What is the Laplace transform of t^2?",
+    "answer": "The Laplace transform of t^2 is 2 / s^3.",
+    "solution": "\\mathcal{L}\\{t^n\\} = \\frac{n!}{s^{n+1}} \u2192 \\frac{2}{s^3}",
+    "steps": [
+      "Use the identity: \\mathcal{L}\\{t^n\\} = \\frac{n!}{s^{n+1}}",
+      "Here, n = 2 \u2192 \\frac{2}{s^3}"
+    ],
+    "confidence": 0.99,
+    "source": "Verified Laplace identity",
+    "markdown": "## \u2705 Final Answer\n\n$$\\mathcal{L}\\{t^n\\} = \\frac{n!}{s^{n+1}} \u2192 \\frac{2}{s^3}$$\n\n## \ud83e\udde0 Step-by-Step Breakdown\n### Step 1\nUse the identity: \\mathcal{L}\\{t^n\\} = \\frac{n!}{s^{n+1}}\\n### Step 2\\nHere, n = 2 \u2192 \\frac{2}{s^3}"
+  },
+  {
+    "question": "What is the Laplace transform of e^{-3t} * t?",
+    "answer": "The Laplace transform of e^{-3t} * t is 1 / (s + 3)^2.",
+    "solution": "\\mathcal{L}\\{t e^{-at}\\} = \\frac{1}{(s + a)^2}",
+    "steps": [
+      "Use the identity: \\mathcal{L}\\{t e^{-at}\\} = \\frac{1}{(s + a)^2}",
+      "Here, a = 3 \u2192 \\frac{1}{(s + 3)^2}"
+    ],
+    "confidence": 0.99,
+    "source": "Verified Laplace identity",
+    "markdown": "## \u2705 Final Answer\n\n$$\\mathcal{L}\\{t e^{-at}\\} = \\frac{1}{(s + a)^2}$$\n\n## \ud83e\udde0 Step-by-Step Breakdown\n### Step 1\nUse the identity: \\mathcal{L}\\{t e^{-at}\\} = \\frac{1}{(s + a)^2}\\n### Step 2\\nHere, a = 3 \u2192 \\frac{1}{(s + 3)^2}"
+  },
+  {
+    "question": "What is the Laplace transform of 1?",
+    "answer": "The Laplace transform of 1 is 1 / s.",
+    "solution": "\\mathcal{L}\\{1\\} = \\frac{1}{s}",
+    "steps": [
+      "Use the identity: \\mathcal{L}\\{1\\} = \\frac{1}{s}"
+    ],
+    "confidence": 0.99,
+    "source": "Verified Laplace identity",
+    "markdown": "## \u2705 Final Answer\n\n$$\\mathcal{L}\\{1\\} = \\frac{1}{s}$$\n\n## \ud83e\udde0 Step-by-Step Breakdown\n### Step 1\nUse the identity: \\mathcal{L}\\{1\\} = \\frac{1}{s}"
+  },
+  {
+    "question": "What is the Laplace transform of t^3?",
+    "answer": "The Laplace transform of t^3 is 6 / s^4.",
+    "solution": "L{t^3} = 3! / s^4 = 6 / s^4",
+    "steps": [
+      "Use the identity: L{t^n} = n! / s^(n+1)",
+      "Here, n = 3 \u2192 3! = 6",
+      "So, L{t^3} = 6 / s^4"
+    ],
+    "confidence": 0.9,
+    "source": "DSPy fallback",
+    "markdown": "## \\u2705 Final Answer\\n\\nL{t^3} = 3! / s^4 = 6 / s^4\\n\\n## \\ud83e\\udde0 Step-by-Step Breakdown\\n### Step 1\\nUse the identity: L{t^n} = n! / s^(n+1)\\n### Step 2\\nHere, n = 3 \\u2192 3! = 6\\n### Step 3\\nSo, L{t^3} = 6 / s^4"
+  }
+]

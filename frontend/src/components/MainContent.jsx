@@ -1,3 +1,4 @@
+import MathBlock from "./MathBlock";
 import { useState, useEffect, useRef } from "react";
 import { IoMdSend } from "react-icons/io";
 import { FiUpload } from "react-icons/fi";
@@ -139,7 +140,7 @@ export default function MainContent({ chatHistory, setChatHistory }) {
   return (
     <div className="flex flex-col flex-1 bg-[#0a0a0a] text-white">
       {chatHistory.length === 0 && !isThinking ? (
-        // 🏠 Landing Page unchanged
+        // 🏠 Landing Page
         <div className="flex flex-col flex-1 items-center justify-center text-center p-6">
           <h1 className="text-4xl font-bold mb-3">Math Solver Agent</h1>
           <p className="text-gray-400 mb-8 max-w-md">
@@ -212,17 +213,21 @@ export default function MainContent({ chatHistory, setChatHistory }) {
                           </div>
                         )}
 
+                        {/* ✅ Updated Final Answer block */}
                         {msg.content.solution && (
                           <div className="mt-4 p-3 bg-green-900/20 border border-green-600 rounded-lg">
                             <div className="flex justify-between items-start">
-                              <div>
-                                <div className="text-green-300 font-semibold text-sm mb-1">
+                              <div className="flex flex-col gap-2">
+                                <div className="text-green-300 font-semibold text-sm">
                                   ✅ Final Answer:
                                 </div>
                                 <Markdown>{msg.content.solution}</Markdown>
+                                <MathBlock latex={msg.content.solution} block />
                               </div>
                               <button
-                                onClick={() => copyToClipboard(msg.content.solution)}
+                                onClick={() =>
+                                  copyToClipboard(msg.content.solution)
+                                }
                                 className="text-gray-400 hover:text-white"
                               >
                                 <BiCopy />
