@@ -1,0 +1,106 @@
+[
+  {
+    "id": "fb_1761865888.875936",
+    "timestamp": "2025-10-31T04:41:28.876229",
+    "question": "Evaluate \n\u222b\n\ud835\udc65\n(\n\ud835\udc65\n+\n1\n)\n2\n\u2009\n\ud835\udc51\n\ud835\udc65\n\u222b\n(x+1)\n2\nx\n\t\u200b\n\ndx.",
+    "answer": "$$\\int (x+1)2dx$$\n\n$$=2\\int (x+1)dx$$\n\n$$=2\\left[\\frac{x^2}{2}+x\\right]+C$$\n\n$$=x^2+2x+C$$\n\nwhere C is the constant of integration.",
+    "rating": 5,
+    "comment": ""
+  },
+  {
+    "id": "fb_1761865890.735162",
+    "timestamp": "2025-10-31T04:41:30.735195",
+    "question": "Evaluate \n\u222b\n\ud835\udc65\n(\n\ud835\udc65\n+\n1\n)\n2\n\u2009\n\ud835\udc51\n\ud835\udc65\n\u222b\n(x+1)\n2\nx\n\t\u200b\n\ndx.",
+    "answer": "$$\\int (x+1)2dx$$\n\n$$=2\\int (x+1)dx$$\n\n$$=2\\left[\\frac{x^2}{2}+x\\right]+C$$\n\n$$=x^2+2x+C$$\n\nwhere C is the constant of integration.",
+    "rating": 5,
+    "comment": ""
+  },
+  {
+    "id": "fb_1761865893.819845",
+    "timestamp": "2025-10-31T04:41:33.819876",
+    "question": "Evaluate \n\u222b\n\ud835\udc65\n(\n\ud835\udc65\n+\n1\n)\n2\n\u2009\n\ud835\udc51\n\ud835\udc65\n\u222b\n(x+1)\n2\nx\n\t\u200b\n\ndx.",
+    "answer": "$$\\int (x+1)2dx$$\n\n$$=2\\int (x+1)dx$$\n\n$$=2\\left[\\frac{x^2}{2}+x\\right]+C$$\n\n$$=x^2+2x+C$$\n\nwhere C is the constant of integration.",
+    "rating": 5,
+    "comment": ""
+  },
+  {
+    "id": "fb_1761866352.844787",
+    "timestamp": "2025-10-31T04:49:12.844864",
+    "question": "If \n\ud835\udc66\n=\nln\n\u2061\n(\nsin\n\u2061\n\ud835\udc65\n)\ny=ln(sinx), find \n\ud835\udc51\n2\n\ud835\udc66\n\ud835\udc51\n\ud835\udc65\n2\ndx\n2\nd\n2\ny\n\t\u200b\n\n.",
+    "answer": "Let's use the chain rule to find the derivative of \ud835\udc66 with respect to \ud835\udc65.\nUsing the chain rule, we have:\n\ndy/dx = d/dx ln(sinx) * d/dx [sinx]\n\ndy/dx = (1/sinx) * cos(x)\n\nNow, we can use the chain rule to find the derivative of \ud835\udc66 with respect to \ud835\udc65:\n\nd/dx \ud835\udc66 = d/dx ln(sinx) * d/dx [sinx] = (1/sinx) * cos(x)\n\nTherefore, \ud835\udc51\n2\n\ud835\udc66\n\ud835\udc51\n\ud835\udc65\n= (1/sinx) * cos(x).",
+    "rating": 5,
+    "comment": ""
+  },
+  {
+    "id": "fb_1761866354.100215",
+    "timestamp": "2025-10-31T04:49:14.100236",
+    "question": "If \n\ud835\udc66\n=\nln\n\u2061\n(\nsin\n\u2061\n\ud835\udc65\n)\ny=ln(sinx), find \n\ud835\udc51\n2\n\ud835\udc66\n\ud835\udc51\n\ud835\udc65\n2\ndx\n2\nd\n2\ny\n\t\u200b\n\n.",
+    "answer": "Let's use the chain rule to find the derivative of \ud835\udc66 with respect to \ud835\udc65.\nUsing the chain rule, we have:\n\ndy/dx = d/dx ln(sinx) * d/dx [sinx]\n\ndy/dx = (1/sinx) * cos(x)\n\nNow, we can use the chain rule to find the derivative of \ud835\udc66 with respect to \ud835\udc65:\n\nd/dx \ud835\udc66 = d/dx ln(sinx) * d/dx [sinx] = (1/sinx) * cos(x)\n\nTherefore, \ud835\udc51\n2\n\ud835\udc66\n\ud835\udc51\n\ud835\udc65\n= (1/sinx) * cos(x).",
+    "rating": 1,
+    "comment": ""
+  },
+  {
+    "id": "fb_1761866461.332103",
+    "timestamp": "2025-10-31T04:51:01.332987",
+    "question": "If \n\ud835\udc66\n=\nln\n\u2061\n(\nsin\n\u2061\n\ud835\udc65\n)\ny=ln(sinx), find \n\ud835\udc51\n2\n\ud835\udc66\n\ud835\udc51\n\ud835\udc65\n2\ndx\n2\nd\n2\ny\n\t\u200b\n\n.",
+    "answer": "Let's use the chain rule to find the derivative of \ud835\udc66 with respect to \ud835\udc65.\nUsing the chain rule, we have:\n\ndy/dx = d/dx ln(sinx) * d/dx [sinx]\n\ndy/dx = (1/sinx) * cos(x)\n\nNow, we can use the chain rule to find the derivative of \ud835\udc66 with respect to \ud835\udc65:\n\nd/dx \ud835\udc66 = d/dx ln(sinx) * d/dx [sinx] = (1/sinx) * cos(x)\n\nTherefore, \ud835\udc51\n2\n\ud835\udc66\n\ud835\udc51\n\ud835\udc65\n= (1/sinx) * cos(x).",
+    "rating": 5,
+    "comment": ""
+  },
+  {
+    "id": "fb_1761866462.885865",
+    "timestamp": "2025-10-31T04:51:02.885895",
+    "question": "If \n\ud835\udc66\n=\nln\n\u2061\n(\nsin\n\u2061\n\ud835\udc65\n)\ny=ln(sinx), find \n\ud835\udc51\n2\n\ud835\udc66\n\ud835\udc51\n\ud835\udc65\n2\ndx\n2\nd\n2\ny\n\t\u200b\n\n.",
+    "answer": "Let's use the chain rule to find the derivative of \ud835\udc66 with respect to \ud835\udc65.\nUsing the chain rule, we have:\n\ndy/dx = d/dx ln(sinx) * d/dx [sinx]\n\ndy/dx = (1/sinx) * cos(x)\n\nNow, we can use the chain rule to find the derivative of \ud835\udc66 with respect to \ud835\udc65:\n\nd/dx \ud835\udc66 = d/dx ln(sinx) * d/dx [sinx] = (1/sinx) * cos(x)\n\nTherefore, \ud835\udc51\n2\n\ud835\udc66\n\ud835\udc51\n\ud835\udc65\n= (1/sinx) * cos(x).",
+    "rating": 1,
+    "comment": ""
+  },
+  {
+    "id": "fb_1761866465.154391",
+    "timestamp": "2025-10-31T04:51:05.154437",
+    "question": "If \n\ud835\udc66\n=\nln\n\u2061\n(\nsin\n\u2061\n\ud835\udc65\n)\ny=ln(sinx), find \n\ud835\udc51\n2\n\ud835\udc66\n\ud835\udc51\n\ud835\udc65\n2\ndx\n2\nd\n2\ny\n\t\u200b\n\n.",
+    "answer": "Let's use the chain rule to find the derivative of \ud835\udc66 with respect to \ud835\udc65.\nUsing the chain rule, we have:\n\ndy/dx = d/dx ln(sinx) * d/dx [sinx]\n\ndy/dx = (1/sinx) * cos(x)\n\nNow, we can use the chain rule to find the derivative of \ud835\udc66 with respect to \ud835\udc65:\n\nd/dx \ud835\udc66 = d/dx ln(sinx) * d/dx [sinx] = (1/sinx) * cos(x)\n\nTherefore, \ud835\udc51\n2\n\ud835\udc66\n\ud835\udc51\n\ud835\udc65\n= (1/sinx) * cos(x).",
+    "rating": 5,
+    "comment": ""
+  },
+  {
+    "id": "fb_1761867066.430054",
+    "timestamp": "2025-10-31T05:01:06.430604",
+    "question": "Solve the differential equation \n\ud835\udc51\n\ud835\udc66\n\ud835\udc51\n\ud835\udc65\n=\n\ud835\udc66\ntan\n\u2061\n\ud835\udc65\ndx\ndy\n\t\u200b\n\n=ytanx.",
+    "answer": "$$\\frac{d}{dx}\\left[\\tan x\\right]=\\frac{\\frac{d}{dx}[\\tan x]}{\\frac{d}{dx}[x]}=\\frac{\\sec^2 x}{\\cos x}$$\n\nThe general solution is \ud835\udc66 =C\u222b\ud835\udc66\u22c5 sec^2 x dx, where C is an arbitrary constant.",
+    "rating": 5,
+    "comment": ""
+  },
+  {
+    "id": "fb_1761868368.975178",
+    "timestamp": "2025-10-31T05:22:48.975264",
+    "question": "Solve the differential equation \n\ud835\udc51\n\ud835\udc66\n\ud835\udc51\n\ud835\udc65\n=\n\ud835\udc66\ntan\n\u2061\n\ud835\udc65\ndx\ndy\n\t\u200b\n\n=ytanx.",
+    "answer": "The differential equation is solved by separation of variables:\n\n$$\\frac{1}{\\tan x}dx=\\frac{1}{y}dy$$\n\nIntegrating both sides, we get:\n\n$$\\arctan(y)=x+C$$\n\nwhere C is an arbitrary constant. \n\nTherefore, the solution to the differential equation is:\n\n$$\\boxed{y=Ce^{x}\\tan x}$$",
+    "rating": 1,
+    "comment": ""
+  },
+  {
+    "id": "fb_1761868370.170816",
+    "timestamp": "2025-10-31T05:22:50.170857",
+    "question": "Solve the differential equation \n\ud835\udc51\n\ud835\udc66\n\ud835\udc51\n\ud835\udc65\n=\n\ud835\udc66\ntan\n\u2061\n\ud835\udc65\ndx\ndy\n\t\u200b\n\n=ytanx.",
+    "answer": "The differential equation is solved by separation of variables:\n\n$$\\frac{1}{\\tan x}dx=\\frac{1}{y}dy$$\n\nIntegrating both sides, we get:\n\n$$\\arctan(y)=x+C$$\n\nwhere C is an arbitrary constant. \n\nTherefore, the solution to the differential equation is:\n\n$$\\boxed{y=Ce^{x}\\tan x}$$",
+    "rating": 5,
+    "comment": ""
+  },
+  {
+    "id": "fb_1761868411.323145",
+    "timestamp": "2025-10-31T05:23:31.323187",
+    "question": "Solve the differential equation \n\ud835\udc51\n\ud835\udc66\n\ud835\udc51\n\ud835\udc65\n=\n\ud835\udc66\ntan\n\u2061\n\ud835\udc65\ndx\ndy\n\t\u200b\n\n=ytanx",
+    "answer": "The differential equation is:\n\n$$\\frac{dy}{dx} = \\tan x$$\n\nIntegrating both sides, we get:\n\n$$\\int \\frac{dy}{dx} dx = \\int \\tan x dx$$\n\n$$y = -\\cot x + C$$\n\nwhere C is the constant of integration.",
+    "rating": 1,
+    "comment": ""
+  },
+  {
+    "id": "fb_1761868416.318054",
+    "timestamp": "2025-10-31T05:23:36.318074",
+    "question": "Solve the differential equation \n\ud835\udc51\n\ud835\udc66\n\ud835\udc51\n\ud835\udc65\n=\n\ud835\udc66\ntan\n\u2061\n\ud835\udc65\ndx\ndy\n\t\u200b\n\n=ytanx.",
+    "answer": "The differential equation is solved by separation of variables:\n\n$$\\frac{1}{\\tan x}dx=\\frac{1}{y}dy$$\n\nIntegrating both sides, we get:\n\n$$\\arctan(y)=x+C$$\n\nwhere C is an arbitrary constant. \n\nTherefore, the solution to the differential equation is:\n\n$$\\boxed{y=Ce^{x}\\tan x}$$",
+    "rating": 5,
+    "comment": ""
+  }
+]
