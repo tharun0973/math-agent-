@@ -102,5 +102,13 @@
     "answer": "The differential equation is solved by separation of variables:\n\n$$\\frac{1}{\\tan x}dx=\\frac{1}{y}dy$$\n\nIntegrating both sides, we get:\n\n$$\\arctan(y)=x+C$$\n\nwhere C is an arbitrary constant. \n\nTherefore, the solution to the differential equation is:\n\n$$\\boxed{y=Ce^{x}\\tan x}$$",
     "rating": 5,
     "comment": ""
+  },
+  {
+    "id": "fb_1761873485.252143",
+    "timestamp": "2025-10-31T06:48:05.252609",
+    "question": "What is the integral of ln(x)?",
+    "answer": "ln|x| + C",
+    "rating": 5,
+    "comment": "Clear and helpful"
   }
 ]

@@ -36,7 +36,7 @@ def route_question(question: str) -> dict:
     # Step 2: Try Knowledge Base first
     logger.info("🔍 Step 1: Searching Knowledge Base...")
     kb_result = search_knowledge_base(question)
-    if kb_result and kb_result.get("confidence", 0) > 0.5:
+    if kb_result and kb_result.get("confidence", 0) >  0.85:
         logger.info(f"✅ KB result found with confidence {kb_result.get('confidence', 0):.2f}")
         return {
             "answer": sanitize_output(kb_result.get("answer", "")),
