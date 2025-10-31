@@ -1,6 +1,5 @@
 
 # 📘 Math Routing Agent
-# =====================
 
 A sophisticated AI-powered mathematics assistant built with an Agentic-RAG system that mimics a professor.  
 It intelligently routes math queries through multiple reasoning layers (KB, Symbolic Solver, Web Search)  
