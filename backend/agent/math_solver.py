@@ -1,179 +1,119 @@
-from sympy import symbols, Eq, solve, simplify, expand, factor, diff, integrate, limit, sin, cos, tan, log, exp
+import logging, re
+from sympy import symbols, Eq, solve, integrate, diff, simplify, sympify, latex
 from sympy.parsing.sympy_parser import parse_expr
-import re
+
+logger = logging.getLogger(__name__)
 
 class MathSolver:
     def __init__(self):
-        self.x, self.y, self.z = symbols('x y z')
+        self.x, self.y, self.z = symbols("x y z")
 
-    def solve_equation(self, question: str):
-        """Enhanced solver that handles multiple math problem types"""
+    def normalize_equation(self, expr: str) -> str:
+        expr = expr.replace("^", "**")
+        repl = {
+            "²": "**2", "³": "**3", "⁴": "**4", "⁵": "**5",
+            "⁶": "**6", "⁷": "**7", "⁸": "**8", "⁹": "**9"
+        }
+        for k, v in repl.items():
+            expr = expr.replace(k, v)
+        expr = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', expr)
+        expr = re.sub(r'([a-zA-Z])(\d)', r'\1*\2', expr)
+        return expr
+
+    def solve_equation(self, question: str) -> dict:
         try:
-            # Clean question
-            question_clean = question.strip()
-            
-            # Detect problem type
-            if any(op in question_clean.lower() for op in ['derivative', 'differentiate', "d/dx"]):
-                return self._solve_derivative(question_clean)
-            elif any(op in question_clean.lower() for op in ['integrate', 'integral', '∫']):
-                return self._solve_integral(question_clean)
-            elif 'limit' in question_clean.lower():
-                return self._solve_limit(question_clean)
-            elif '=' in question_clean:
-                return self._solve_equation(question_clean)
-            elif any(op in question_clean for op in ['+', '-', '*', '/']):
-                return self._evaluate_expression(question_clean)
-            else:
+            q = self.normalize_equation(question)
+            q = q.replace("?", "").strip()
+            q = re.sub(r"(?i)solve", "", q).strip()
+
+            math_keywords = ["+", "-", "*", "/", "=", "^", "**", "∫", "lim", "∑", "dx", "dy"]
+            if not any(kw in q for kw in math_keywords):
                 return {
-                    "answer": "Could not identify problem type",
-                    "steps": ["Unsupported operation"],
+                    "answer": (
+                        "❌ This assistant only handles mathematics-related questions.\n\n"
+                        "Please ask a valid math problem such as an equation, derivative, or integral."
+                    ),
                     "solution": "",
                     "confidence": 0.0
                 }
-        except Exception as e:
+
+            # ✅ Handle integration
+            if re.search(r"(?i)integrate|∫", q):
+                expr = re.sub(r"(?i)integrate|∫", "", q).strip()
+                sym_expr = sympify(expr)
+                result = integrate(sym_expr, self.x)
+                latex_expr = latex(sym_expr)
+                latex_result = latex(result)
+
+                answer = (
+                    f"Problem: Integrate {expr}\n\n"
+                    f"Step 1: Parsed expression: ${latex_expr}$\n\n"
+                    f"Step 2: Apply integration rule\n\n"
+                    f"Final Answer: $\\int {latex_expr}\\,dx = {latex_result} + C$"
+                )
+                return {"answer": answer, "solution": latex_result, "confidence": 1.0}
+
+            # ✅ Handle differentiation
+            if re.search(r"(?i)d/dx|differentiate", q):
+                expr = re.sub(r"(?i)d/dx|differentiate", "", q).strip()
+                sym_expr = sympify(expr)
+                result = diff(sym_expr, self.x)
+                latex_expr = latex(sym_expr)
+                latex_result = latex(result)
+
+                answer = (
+                    f"Problem: Differentiate {expr}\n\n"
+                    f"Step 1: Parsed expression: ${latex_expr}$\n\n"
+                    f"Step 2: Apply derivative rule\n\n"
+                    f"Final Answer: $\\frac{{d}}{{dx}}({latex_expr}) = {latex_result}$"
+                )
+                return {"answer": answer, "solution": latex_result, "confidence": 1.0}
+
+            # ✅ Handle equation solving
+            if "==" not in q and "=" in q:
+                q = q.replace("=", "==")
+
+            if "==" in q:
+                lhs, rhs = q.split("==")
+                lhs_expr = parse_expr(lhs.strip(), evaluate=False)
+                rhs_expr = parse_expr(rhs.strip(), evaluate=False)
+                eq = Eq(lhs_expr, rhs_expr)
+            else:
+                expr = parse_expr(q.strip(), evaluate=False)
+                eq = Eq(expr, 0)
+
+            result = solve(eq)
+            latex_eq = latex(eq)
+
+            if result:
+                latex_results = [latex(simplify(r)) for r in result]
+                latex_final = ", ".join(latex_results)
+
+                answer = (
+                    f"Problem: Solve ${latex_eq}$\n\n"
+                    f"Step 1: Equation parsed as ${latex_eq}$\n\n"
+                    f"Step 2: Apply solving rule\n\n"
+                    f"Final Answer: $x = {latex_final}$"
+                )
+                return {"answer": answer, "solution": latex_final, "confidence": 1.0}
+
             return {
-                "answer": "Error solving problem",
-                "steps": [f"Error: {str(e)}"],
+                "answer": (
+                    "I couldn't solve this mathematical problem.\n\n"
+                    "Step 1: No suitable solver or formula found for this input."
+                ),
                 "solution": "",
-                "confidence": 0.0
+                "confidence": 0.0,
             }
 
-    def _solve_equation(self, question: str):
-        """Solve algebraic equations"""
-        try:
-            # Extract equation parts
-            if '=' not in question:
-                return None
-            
-            left, right = question.split('=', 1)
-            left_expr = parse_expr(left.strip().replace('^', '**'))
-            right_expr = parse_expr(right.strip().replace('^', '**'))
-            eq = Eq(left_expr, right_expr)
-            
-            # Solve
-            solutions = solve(eq, self.x)
-            
-            steps = [
-                f"Given equation: {left.strip()} = {right.strip()}",
-                f"Rearranged: {eq}",
-                f"Solution(s): x = {', '.join([str(s) for s in solutions])}"
-            ]
-            
-            solution_str = f"x = {', '.join([str(s) for s in solutions])}"
-            
-            return {
-                "answer": solution_str,
-                "steps": steps,
-                "solution": solution_str,
-                "confidence": 0.85
-            }
         except Exception as e:
-            raise Exception(f"Equation solving error: {e}")
-
-    def _solve_derivative(self, question: str):
-        """Solve derivatives"""
-        try:
-            # Extract expression
-            expr_str = re.sub(r'(derivative|differentiate|d/dx|of)', '', question, flags=re.I)
-            expr_str = expr_str.replace('^', '**').strip()
-            
-            # Remove common prefixes
-            for prefix in ['find the', 'solve', 'compute', 'calculate', 'what is']:
-                if expr_str.lower().startswith(prefix):
-                    expr_str = expr_str[len(prefix):].strip()
-            
-            expr = parse_expr(expr_str)
-            deriv = diff(expr, self.x)
-            
-            steps = [
-                f"Function: f(x) = {expr}",
-                f"Derivative: f'(x) = {deriv}"
-            ]
-            
+            logger.error(f"SymPy error: {e}")
             return {
-                "answer": f"f'(x) = {deriv}",
-                "steps": steps,
-                "solution": str(deriv),
-                "confidence": 0.8
+                "answer": (
+                    f"⚠️ I couldn't solve this mathematical problem.\n"
+                    f"Error: {e}\n\n"
+                    "Step 1: SymPy parsing or solving failed."
+                ),
+                "solution": "",
+                "confidence": 0.0,
             }
-        except Exception as e:
-            raise Exception(f"Derivative error: {e}")
-
-    def _solve_integral(self, question: str):
-        """Solve integrals"""
-        try:
-            # Extract expression
-            expr_str = re.sub(r'(integral|integrate|∫)', '', question, flags=re.I)
-            expr_str = expr_str.replace('^', '**').strip()
-            
-            # Remove common prefixes
-            for prefix in ['find the', 'solve', 'compute', 'calculate', 'of']:
-                if expr_str.lower().startswith(prefix):
-                    expr_str = expr_str[len(prefix):].strip()
-            
-            expr = parse_expr(expr_str)
-            integral = integrate(expr, self.x)
-            
-            steps = [
-                f"Integral: ∫{expr} dx",
-                f"Solution: {integral} + C"
-            ]
-            
-            return {
-                "answer": f"∫{expr} dx = {integral} + C",
-                "steps": steps,
-                "solution": str(integral),
-                "confidence": 0.8
-            }
-        except Exception as e:
-            raise Exception(f"Integral error: {e}")
-
-    def _solve_limit(self, question: str):
-        """Solve limits"""
-        try:
-            # Extract expression and limit point
-            match = re.search(r'limit.*?\bas\s+(?:x|n)\s*→\s*(\S+)', question, re.I)
-            if not match:
-                return None
-            
-            limit_point = parse_expr(match.group(1))
-            expr_str = re.sub(r'limit.*?\bas.*', '', question, flags=re.I).strip()
-            expr_str = expr_str.replace('^', '**')
-            
-            expr = parse_expr(expr_str)
-            lim = limit(expr, self.x, limit_point)
-            
-            steps = [
-                f"Limit: lim(x→{limit_point}) {expr}",
-                f"Solution: {lim}"
-            ]
-            
-            return {
-                "answer": str(lim),
-                "steps": steps,
-                "solution": str(lim),
-                "confidence": 0.75
-            }
-        except Exception as e:
-            raise Exception(f"Limit error: {e}")
-
-    def _evaluate_expression(self, question: str):
-        """Evaluate simple expressions"""
-        try:
-            expr_str = question.replace('^', '**').strip()
-            expr = parse_expr(expr_str)
-            result = expr.evalf()
-            
-            steps = [
-                f"Expression: {question}",
-                f"Result: {result}"
-            ]
-            
-            return {
-                "answer": str(result),
-                "steps": steps,
-                "solution": str(result),
-                "confidence": 0.9
-            }
-        except Exception as e:
-            raise Exception(f"Evaluation error: {e}")

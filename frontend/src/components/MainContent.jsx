@@ -213,29 +213,6 @@ export default function MainContent({ chatHistory, setChatHistory }) {
                           </div>
                         )}
 
-                        {/* ✅ Updated Final Answer block */}
-                        {msg.content.solution && (
-                          <div className="mt-4 p-3 bg-green-900/20 border border-green-600 rounded-lg">
-                            <div className="flex justify-between items-start">
-                              <div className="flex flex-col gap-2">
-                                <div className="text-green-300 font-semibold text-sm">
-                                  ✅ Final Answer:
-                                </div>
-                                <Markdown>{msg.content.solution}</Markdown>
-                                <MathBlock latex={msg.content.solution} block />
-                              </div>
-                              <button
-                                onClick={() =>
-                                  copyToClipboard(msg.content.solution)
-                                }
-                                className="text-gray-400 hover:text-white"
-                              >
-                                <BiCopy />
-                              </button>
-                            </div>
-                          </div>
-                        )}
-
                         <div className="flex gap-3 mt-3 text-gray-400 text-sm justify-start">
                           <button
                             onClick={() => handleFeedback(idx, "like")}

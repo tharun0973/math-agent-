@@ -3,16 +3,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from typing import List, Optional
-import json, asyncio, traceback, os
+import json, asyncio, os
 from datetime import datetime
+
 from agent.routing import route_question
+from agent.guardrails import validate_input, rejection_message, sanitize_output
 
 app = FastAPI(title="Math Routing Agent API", version="1.0.0")
-
-# Feedback storage file
 FEEDBACK_FILE = "feedback.json"
 
-# ✅ CORS setup
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -24,12 +23,10 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-# ✅ Request schema
 class MathRequest(BaseModel):
     question: str
     stream: bool = False
 
-# ✅ Response schema
 class MathResponse(BaseModel):
     question: str
     answer: str
@@ -37,11 +34,10 @@ class MathResponse(BaseModel):
     solution: str
     confidence: float
 
-# ✅ Feedback schemas
 class FeedbackRequest(BaseModel):
     question: str
     answer: str
-    rating: int  # 1-5
+    rating: int
     comment: Optional[str] = ""
 
 class FeedbackResponse(BaseModel):
@@ -57,65 +53,62 @@ async def root():
 async def health_check():
     return {"status": "healthy"}
 
-# ✅ Main solve endpoint
 @app.post("/solve", response_model=MathResponse)
 async def solve_math(request: MathRequest):
     try:
-        result = route_question(request.question)
-        print("🔍 Routing result:", result)
-
+        question = request.question.strip()
+        if not validate_input(question):
+            return MathResponse(
+                question=question,
+                answer=rejection_message(),
+                steps=["Non-mathematical query detected."],
+                solution="",
+                confidence=0.0
+            )
+        result = route_question(question)
         required_keys = ["answer", "steps", "solution", "confidence"]
         if not result or not all(k in result for k in required_keys):
             raise ValueError("Routing failed or incomplete result.")
-
         return MathResponse(
-            question=request.question,
-            answer=result["answer"],
+            question=question,
+            answer=sanitize_output(result["answer"]),
             steps=result["steps"],
             solution=result["solution"],
             confidence=result["confidence"]
         )
-    except Exception as e:
-        print("❌ Error solving question:", request.question)
-        print("🔧 Traceback:", traceback.format_exc())
+    except Exception:
         raise HTTPException(status_code=500, detail="Error fetching answer.")
 
-# ✅ Streaming endpoint (unchanged)
 @app.post("/solve/stream")
 async def solve_math_stream(request: MathRequest):
     async def generate():
         try:
-            result = route_question(request.question)
-            if result is None:
-                yield json.dumps({"type": "error", "data": "Routing failed or no result returned."}) + "\n"
+            question = request.question.strip()
+            if not validate_input(question):
+                yield json.dumps({"type": "answer", "data": rejection_message()}) + "\n"
+                yield json.dumps({"type": "done", "data": "Complete"}) + "\n"
                 return
-            chunks = [
-                json.dumps({"type": "question", "data": request.question}) + "\n",
-                json.dumps({"type": "status", "data": "Solving..."}) + "\n"
-            ]
+            result = route_question(question)
+            if not result:
+                yield json.dumps({"type": "error", "data": "Routing failed."}) + "\n"
+                return
+            yield json.dumps({"type": "question", "data": question}) + "\n"
+            yield json.dumps({"type": "status", "data": "Solving..."}) + "\n"
             for i, step in enumerate(result["steps"], 1):
-                chunks.append(json.dumps({"type": "step", "data": step, "number": i}) + "\n")
-            chunks.append(json.dumps({"type": "solution", "data": result["solution"]}) + "\n")
-            chunks.append(json.dumps({"type": "answer", "data": result["answer"]}) + "\n")
-            chunks.append(json.dumps({"type": "done", "data": "Complete"}) + "\n")
-            for chunk in chunks:
-                yield chunk
-                await asyncio.sleep(0.05)
+                yield json.dumps({"type": "step", "data": step, "number": i}) + "\n"
+            yield json.dumps({"type": "solution", "data": result["solution"]}) + "\n"
+            yield json.dumps({"type": "answer", "data": sanitize_output(result["answer"])}) + "\n"
+            yield json.dumps({"type": "done", "data": "Complete"}) + "\n"
+            await asyncio.sleep(0.05)
         except Exception as e:
-            print("Stream Error Traceback:", traceback.format_exc())
             yield json.dumps({"type": "error", "data": str(e)}) + "\n"
     return StreamingResponse(generate(), media_type="text/event-stream")
 
-# ✅ Feedback endpoint
 @app.post("/feedback", response_model=FeedbackResponse)
 async def submit_feedback(request: FeedbackRequest):
-    """Submit user feedback for a question-answer pair"""
     try:
-        # Validate rating
-        if request.rating < 1 or request.rating > 5:
+        if not (1 <= request.rating <= 5):
             raise HTTPException(status_code=400, detail="Rating must be between 1 and 5")
-        
-        # Create feedback entry
         feedback_entry = {
             "id": f"fb_{datetime.now().timestamp()}",
             "timestamp": datetime.now().isoformat(),
@@ -124,72 +117,42 @@ async def submit_feedback(request: FeedbackRequest):
             "rating": request.rating,
             "comment": request.comment
         }
-        
-        # Load existing feedback
         feedbacks = []
         if os.path.exists(FEEDBACK_FILE):
             try:
-                with open(FEEDBACK_FILE, 'r') as f:
+                with open(FEEDBACK_FILE, "r") as f:
                     feedbacks = json.load(f)
             except json.JSONDecodeError:
                 feedbacks = []
-        
-        # Add new feedback
         feedbacks.append(feedback_entry)
-        
-        # Save to file
-        with open(FEEDBACK_FILE, 'w') as f:
+        with open(FEEDBACK_FILE, "w") as f:
             json.dump(feedbacks, f, indent=2)
-        
-        print(f"✅ Feedback received: {request.rating}/5 for question: {request.question[:50]}...")
-        
         return FeedbackResponse(
             status="success",
             message="Feedback submitted successfully",
             feedback_id=feedback_entry["id"]
         )
-        
-    except Exception as e:
-        print(f"❌ Error submitting feedback: {e}")
+    except Exception:
         raise HTTPException(status_code=500, detail="Failed to submit feedback")
 
-# ✅ Get feedback statistics
 @app.get("/feedback/stats")
 async def get_feedback_stats():
-    """Get feedback statistics"""
     try:
         if not os.path.exists(FEEDBACK_FILE):
-            return {
-                "total_feedback": 0,
-                "average_rating": 0.0,
-                "ratings_distribution": {}
-            }
-        
-        with open(FEEDBACK_FILE, 'r') as f:
+            return {"total_feedback": 0, "average_rating": 0.0, "ratings_distribution": {}}
+        with open(FEEDBACK_FILE, "r") as f:
             feedbacks = json.load(f)
-        
         if not feedbacks:
-            return {
-                "total_feedback": 0,
-                "average_rating": 0.0,
-                "ratings_distribution": {}
-            }
-        
-        # Calculate stats
+            return {"total_feedback": 0, "average_rating": 0.0, "ratings_distribution": {}}
         total = len(feedbacks)
         avg_rating = sum(f.get("rating", 0) for f in feedbacks) / total
-        ratings_dist = {}
-        for i in range(1, 6):
-            ratings_dist[i] = sum(1 for f in feedbacks if f.get("rating") == i)
-        
+        ratings_dist = {i: sum(1 for f in feedbacks if f.get("rating") == i) for i in range(1, 6)}
         return {
             "total_feedback": total,
             "average_rating": round(avg_rating, 2),
             "ratings_distribution": ratings_dist
         }
-        
     except Exception as e:
-        print(f"❌ Error getting feedback stats: {e}")
         return {
             "total_feedback": 0,
             "average_rating": 0.0,

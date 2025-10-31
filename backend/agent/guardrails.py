@@ -1,85 +1,84 @@
 import re
-from typing import List
+from sympy import sympify, solve, diff, integrate, Symbol
 
-# Math-related keywords for validation
 MATH_KEYWORDS = [
-    'solve', 'solve for', 'equation', 'expression', 'function', 'derivative', 
-    'integral', 'limit', 'matrix', 'vector', 'polynomial', 'quadratic', 'linear',
-    'graph', 'plot', 'calculate', 'compute', 'evaluate', 'simplify', 'expand',
-    'factor', 'trigonometry', 'algebra', 'calculus', 'geometry', 'probability',
-    'statistics', 'logarithm', 'exponential', 'series', 'sequence', 'theorem'
+    'solve', 'equation', 'expression', 'function', 'derivative',
+    'differentiate', 'integral', 'integrate', 'limit', 'matrix', 'vector',
+    'polynomial', 'quadratic', 'linear', 'graph', 'plot', 'calculate',
+    'compute', 'evaluate', 'simplify', 'expand', 'factor', 'trigonometry',
+    'algebra', 'calculus', 'geometry', 'probability', 'statistics',
+    'logarithm', 'exponential', 'series', 'sequence', 'theorem',
+    'laplace', 'fourier', 'differential'
 ]
 
-# Unsafe topics to filter
 BANNED_TOPICS = [
     'kill', 'murder', 'violence', 'harm', 'weapon', 'drug', 'illegal',
-    'political election', 'politics', 'religious', 'race', 'gender', 'sex',
-    'pornography', 'adult content'
+    'political', 'election', 'religion', 'religious', 'race', 'gender',
+    'sex', 'porn', 'adult'
 ]
 
-# Hallucination markers to remove from output
 HALLUCINATION_MARKERS = [
     "I'm not sure", "I don't know", "I cannot", "I'm not able", "I don't have",
     "I apologize", "Sorry, I", "I'm sorry", "I'm unable", "I cannot help",
-    "I'm not capable", "I don't understand the question"
+    "I'm not capable", "I don't understand"
 ]
 
 def validate_input(question: str) -> bool:
-    """
-    Validate that the question is math-related and safe.
-    Returns True if valid, False otherwise.
-    """
     if not question or len(question.strip()) < 2:
         return False
-    
-    question_lower = question.lower()
-
-    # Check for banned topics
-    for banned in BANNED_TOPICS:
-        if banned in question_lower:
-            return False
-
-    # Check if it contains math-related content
-    has_math_keyword = any(keyword in question_lower for keyword in MATH_KEYWORDS)
-    has_math_symbols = bool(re.search(r'\d+|\+|\-|\*|\/|=|x|y|z|π|√|∑|∫|t|cubed|squared|Laplace', question))
-
-
-    # Allow short math expressions like "t", "t^2", "t^3"
-    is_simple_math_expr = bool(re.match(r'^t(\^\d+)?$', question.strip()))
-
-    # Must have either math keywords, symbols, or match simple math expression
-    if not (has_math_keyword or has_math_symbols or is_simple_math_expr):
+    q = question.lower()
+    if any(b in q for b in BANNED_TOPICS):
         return False
+    has_keyword = any(re.search(rf'\b{re.escape(k)}\b', q) for k in MATH_KEYWORDS)
+    has_symbols = bool(re.search(r'[\d\+\-\*/=xyzπ√∑∫∞^()sintcostanlogexp]', q))
+    is_simple_expr = bool(re.match(r'^[\dxyz\+\-\*/\^=\s\(\)]+$', question.strip()))
+    return has_keyword or has_symbols or is_simple_expr
 
-    return True
+def rejection_message() -> str:
+    return (
+        "❌ This system only handles **mathematics-related** questions. "
+        "Please ask a valid math problem such as an equation, derivative, "
+        "integral, or Laplace transform."
+    )
 
 def sanitize_output(answer: str) -> str:
-    """
-    Remove hallucinations, profanity, and unsafe content from output.
-    """
     if not answer:
         return ""
-    
     sanitized = answer
     for marker in HALLUCINATION_MARKERS:
-        sanitized = sanitized.replace(marker, "")
-    
-    if sanitized.count("sorry") > 2:
-        lines = sanitized.split('\n')
-        lines = [line for line in lines if 'sorry' not in line.lower()]
-        sanitized = '\n'.join(lines)
-    
-    return sanitized.strip()
+        sanitized = re.sub(re.escape(marker), '', sanitized, flags=re.IGNORECASE)
+    sanitized = re.sub(r'\s+', ' ', sanitized).strip()
+    return sanitized
 
-def extract_math_content(text: str) -> str:
-    """
-    Extract only math-related content from text.
-    """
-    lines = text.split('\n')
-    math_lines = []
-    
-    for line in lines:
-        if re.search(r'\d|\+|\-|\*|\/|=|x|solve|calculate|compute', line):
-            math_lines.append(line)
-    
-    return '\n'.join(math_lines) if math_lines else text
+def solver(question: str):
+    if not validate_input(question):
+        return rejection_message()
+    try:
+        q = question.lower().strip()
+        x = Symbol('x')
+
+        if 'integrate' in q:
+            expr = sympify(q.replace('integrate', '').strip())
+            result = integrate(expr, x)
+            return f"✅ ∫ {expr} dx = {result}"
+
+        elif 'derivative' in q or 'differentiate' in q:
+            expr = sympify(q.replace('derivative', '').replace('differentiate', '').strip())
+            result = diff(expr, x)
+            return f"✅ d/dx({expr}) = {result}"
+
+        elif 'solve' in q:
+            expr = sympify(q.replace('solve', '').strip())
+            result = solve(expr)
+            return f"✅ Solution: {result}"
+
+        else:
+            expr = sympify(question)
+            result = solve(expr)
+            if result:
+                return f"✅ Solution: {result}"
+            else:
+                return rejection_message()
+
+    except Exception:
+        return rejection_message()
